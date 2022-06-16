@@ -26,7 +26,7 @@ PR is approved or not `approvalsCount` times. If approved, then `isApproved` = `
         runs-on: ubuntu-latest
         steps:
         - name: multi-approved-event
-        - uses: sakhnovict/multi-approved-event-action@1.0.0
+        - uses: sakhnovict/multi-approved-event-action@1.0.3
           id: approved
           with:
             approvalsCount: '2'
