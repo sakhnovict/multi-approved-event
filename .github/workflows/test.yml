@@ -11,5 +11,6 @@ jobs:
         approvals: '1'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - run: echo "TEST"
     - run: echo "Approved !!"
       if: steps.approved.outputs.approved == 'true'
