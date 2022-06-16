@@ -1,16 +1,16 @@
 on: pull_request_review
-name: Example Job
+types: [submitted]
+name: Multi Approved Example Job
 jobs:
-  myJob:
+  onSubmit:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: ./
-      id: approved
-      with:
-        approvalsCount: '1'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - run: echo "TEST"
-    - run: echo "Approved !!"
-      if: steps.approved.outputs.isApproved == 'true'
+      - uses: actions/checkout@v2
+      - uses: ./
+        id: approved
+        with:
+          approvalsCount: '2'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: echo "Approved 2 times."
+        if: steps.approved.outputs.isApproved == 'true'
