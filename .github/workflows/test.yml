@@ -1,24 +1,14 @@
-name: 'build-test'
-on: # rebuild any PRs and main branch changes
-  pull_request:
-  push:
-    branches:
-      - main
-      - 'releases/*'
-
+on: pull_request_review
+name: Example Job
 jobs:
-  build: # make sure build/ci work properly
+  myJob:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - run: |
-          npm install
-      - run: |
-          npm run all
-  test: # make sure the action works on a clean machine without building
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ./
-        with:
-          milliseconds: 1000
+    - uses: ./
+      id: approved
+      with:
+        approvals: '1'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - run: echo "Approved !!"
+      if: steps.approved.outputs.approved == 'true'
