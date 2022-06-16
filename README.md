@@ -21,7 +21,8 @@ PR is approved or not `approvalsCount` times. If approved, then `isApproved` = `
     types: [submitted]
     name: Multi Approved Example Job
     jobs:
-      onSubmit:
+      onApprovedSubmit:
+        if: github.event.review.state == 'approved'
         runs-on: ubuntu-latest
         steps:
         - name: multi-approved-event
