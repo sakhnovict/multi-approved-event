@@ -1,11 +1,16 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'multi-approved-event'
+description: Export isApproved state to environment variables.'
+branding:
+  icon: 'check'
+  color: 'green'
+author: 'sakhnovict'
 inputs:
-  milliseconds: # change this
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  approvalsCount:
+    description: 'The number of unique approvals to set isApproved as true.'
+    default: '1'
+outputs:
+  isApproved:
+    description: 'If current PR is approved the right number of times, this value is set as true.'
 runs:
   using: 'node16'
   main: 'dist/index.js'
