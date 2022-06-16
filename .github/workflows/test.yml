@@ -1,6 +1,7 @@
-on: pull_request_review
-types: [submitted]
 name: Multi Approved Example Job
+on:
+  pull_request_review:
+    types: [submitted]
 jobs:
   onSubmit:
     runs-on: ubuntu-latest
