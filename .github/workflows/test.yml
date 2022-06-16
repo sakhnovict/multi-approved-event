@@ -4,6 +4,7 @@ on:
     types: [submitted]
 jobs:
   onSubmit:
+    if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
