@@ -16,3 +16,20 @@ Field is **optional**. Default value is `1`.
 PR is approved or not `approvalsCount` times. If approved, then `isApproved` = `true`.
 
 ## Usage
+
+    on: pull_request_review
+    types: [submitted]
+    name: Multi Approved Example Job
+    jobs:
+      onSubmit:
+        runs-on: ubuntu-latest
+        steps:
+        - name: multi-approved-event
+        - uses: sakhnovict/multi-approved-event-action@1.0.0
+          with:
+            id: approved
+            approvalsCount: '2'
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        - run: echo "Approved 2 times."
+          if: steps.approved.outputs.isApproved == 'true'
