@@ -11,8 +11,10 @@ jobs:
       - uses: ./
         id: approved
         with:
-          approvalsCount: '2'
+          approvalsCount: '1'
+          onlyEqual: 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: echo "Approved 2 times."
+      - run: echo "${{ steps.approved.outputs.isApproved }}"
+      - run: echo "Approved 1 times."
         if: steps.approved.outputs.isApproved == 'true'
