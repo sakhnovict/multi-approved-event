@@ -7,6 +7,7 @@ jobs:
     if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     steps:
+      - run: echo "$ {{ steps.approved.outputs.isApproved }}
       - uses: actions/checkout@v2
       - uses: ./
         id: approved
