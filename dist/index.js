@@ -76,12 +76,10 @@ function run() {
                                 (0, core_1.setOutput)('isApproved', 'true');
                                 (0, core_1.exportVariable)('isApproved', 'true');
                             }
-                            // break;
-                            // } else {
-                            //   setOutput('isApproved', 'false');
-                            //   exportVariable('isApproved', 'false');
-                            //   break;
-                            // }
+                            else {
+                                (0, core_1.setOutput)('isApproved', 'false');
+                                (0, core_1.exportVariable)('isApproved', 'false');
+                            }
                         }
                     }
                 }
