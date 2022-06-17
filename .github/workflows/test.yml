@@ -15,6 +15,7 @@ jobs:
           onlyEqual: 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: steps.approved.outputs.isApproved != 'true'
       - run: echo "${{ steps.approved.outputs.isApproved }}"
       - run: echo "Approved 1 times."
         if: steps.approved.outputs.isApproved == 'true'
