@@ -51,6 +51,7 @@ function run() {
             }
             if (isSubmittedAction(action, state)) {
                 const approvalsCount = getApprovalsCount();
+                const onlyEqual = (0, core_1.getInput)('onlyEqual').toLocaleLowerCase() === 'true';
                 const octokit = new rest_1.default({ auth: `token ${githubEnv.token}` });
                 const [owner, repo] = githubEnv.repositoryPath.split('/');
                 const options = octokit.pulls.listReviews.endpoint.merge({
@@ -65,7 +66,8 @@ function run() {
                         const review = _g.value;
                         if (review.state === 'APPROVED') {
                             users.add(review.user.login);
-                            if (approvalsCount <= users.size) {
+                            const condition = onlyEqual ? approvalsCount === users.size : approvalsCount <= users.size;
+                            if (condition) {
                                 (0, core_1.setOutput)('isApproved', 'true');
                                 (0, core_1.exportVariable)('isApproved', 'true');
                                 break;

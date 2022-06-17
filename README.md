@@ -9,6 +9,10 @@ An action provides an event after a certain number of approvals.
 The number of unique approvals to run event with `isApproved` = `true`.
 Field is **optional**. Default value is `1`.
 
+### `onlyEqual`
+
+Set `isApproved` = `true` only when the number of approvals `=` `approvalsCount`, not `>=`.
+
 ## Outputs
 
 ### `isApproved`
