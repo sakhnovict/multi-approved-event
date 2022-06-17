@@ -59,12 +59,13 @@ async function run(): Promise<void> {
           if (condition) {
             setOutput('isApproved', 'true');
             exportVariable('isApproved', 'true');
-            break;
-          } else {
-            setOutput('isApproved', 'false');
-            exportVariable('isApproved', 'false');
-            break;
           }
+            // break;
+          // } else {
+          //   setOutput('isApproved', 'false');
+          //   exportVariable('isApproved', 'false');
+          //   break;
+          // }
         }
       }
     } else {

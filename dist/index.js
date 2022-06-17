@@ -75,13 +75,13 @@ function run() {
                             if (condition) {
                                 (0, core_1.setOutput)('isApproved', 'true');
                                 (0, core_1.exportVariable)('isApproved', 'true');
-                                break;
                             }
-                            else {
-                                (0, core_1.setOutput)('isApproved', 'false');
-                                (0, core_1.exportVariable)('isApproved', 'false');
-                                break;
-                            }
+                            // break;
+                            // } else {
+                            //   setOutput('isApproved', 'false');
+                            //   exportVariable('isApproved', 'false');
+                            //   break;
+                            // }
                         }
                     }
                 }
