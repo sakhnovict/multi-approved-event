@@ -55,6 +55,10 @@ async function run(): Promise<void> {
             setOutput('isApproved', 'true');
             exportVariable('isApproved', 'true');
             break;
+          } else {
+            setOutput('isApproved', 'false');
+            exportVariable('isApproved', 'false');
+            break;
           }
         }
       }

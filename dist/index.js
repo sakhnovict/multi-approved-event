@@ -75,6 +75,7 @@ function run() {
                             else {
                                 (0, core_1.setOutput)('isApproved', 'false');
                                 (0, core_1.exportVariable)('isApproved', 'false');
+                                break;
                             }
                         }
                     }
