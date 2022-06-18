@@ -34,6 +34,7 @@ async function run(): Promise<void> {
 
     if (isSubmittedAction(action, state)) {
       const approvalsCount = getApprovalsCount();
+      const onlyEqual = getInput('onlyEqual').toLocaleLowerCase() === 'true';
       const octokit = new Octokit({ auth: `token ${githubEnv.token}`});
       const [owner, repo] = githubEnv.repositoryPath.split('/');
       const options = octokit.pulls.listReviews.endpoint.merge({
@@ -49,10 +50,13 @@ async function run(): Promise<void> {
       for await (const review of flatten(list)) {
         if (review.state === 'APPROVED') {
           users.add(review.user.login);
-          if (approvalsCount <= users.size) {
+          const condition = onlyEqual ? approvalsCount === users.size : approvalsCount <= users.size;
+          if (condition) {
             setOutput('isApproved', 'true');
             exportVariable('isApproved', 'true');
-            break;
+          } else {
+            setOutput('isApproved', 'false');
+            exportVariable('isApproved', 'false');
           }
         }
       }

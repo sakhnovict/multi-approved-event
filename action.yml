@@ -8,6 +8,9 @@ inputs:
   approvalsCount:
     description: 'The number of unique approvals to set isApproved as true.'
     default: '1'
+  onlyEqual:
+    description: 'If true then isApproved = true, only when the number of approvals equal approvalsCount.'
+    default: 'false'
 outputs:
   isApproved:
     description: 'If current PR is approved the right number of times, this value is set as true.'
