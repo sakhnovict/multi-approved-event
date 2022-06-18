@@ -51,6 +51,9 @@ async function run(): Promise<void> {
         if (review.state === 'APPROVED') {
           users.add(review.user.login);
           const condition = onlyEqual ? approvalsCount === users.size : approvalsCount <= users.size;
+
+          log(review.user.login, users);
+
           if (condition) {
             setOutput('isApproved', 'true');
             exportVariable('isApproved', 'true');
@@ -127,4 +130,11 @@ function getApprovalsCount(): number {
     }
   }
   return DEFAULT_APPROVALS_COUNT;
+}
+
+function log(userLogin: string, users: Set<string>): void {
+  console.group();
+  console.log('Current reviewer: ', userLogin);
+  console.log('Unique approvals reviewers: ', users);
+  console.groupEnd();
 }
