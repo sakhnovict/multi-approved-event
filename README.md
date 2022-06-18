@@ -30,10 +30,11 @@ PR is approved or not `approvalsCount` times. If approved, then `isApproved` = `
         runs-on: ubuntu-latest
         steps:
         - name: multi-approved-event
-        - uses: sakhnovict/multi-approved-event-action@1.0.3
+        - uses: sakhnovict/multi-approved-event-action@1.0.9
           id: approved
           with:
             approvalsCount: '2'
+            onlyEqual: 'true
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         - run: echo "Approved 2 times."

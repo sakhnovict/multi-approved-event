@@ -51,11 +51,6 @@ async function run(): Promise<void> {
         if (review.state === 'APPROVED') {
           users.add(review.user.login);
           const condition = onlyEqual ? approvalsCount === users.size : approvalsCount <= users.size;
-          console.log('reviewer: ', review.user.login);
-          console.log('onlyEqual: ', onlyEqual);
-          console.log('users: ', users);
-          console.log('approvalsCount === users.size: ', approvalsCount === users.size);
-          console.log('approvalsCount <= users.size: ', approvalsCount <= users.size);
           if (condition) {
             setOutput('isApproved', 'true');
             exportVariable('isApproved', 'true');

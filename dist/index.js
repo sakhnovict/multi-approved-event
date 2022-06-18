@@ -67,11 +67,6 @@ function run() {
                         if (review.state === 'APPROVED') {
                             users.add(review.user.login);
                             const condition = onlyEqual ? approvalsCount === users.size : approvalsCount <= users.size;
-                            console.log('reviewer: ', review.user.login);
-                            console.log('onlyEqual: ', onlyEqual);
-                            console.log('users: ', users);
-                            console.log('approvalsCount === users.size: ', approvalsCount === users.size);
-                            console.log('approvalsCount <= users.size: ', approvalsCount <= users.size);
                             if (condition) {
                                 (0, core_1.setOutput)('isApproved', 'true');
                                 (0, core_1.exportVariable)('isApproved', 'true');
