@@ -7,16 +7,14 @@ jobs:
     if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     steps:
-      - run: echo "${{ steps.approved.outputs.isApproved }}"
       - uses: actions/checkout@v2
       - uses: ./
         id: approved
         with:
-          approvalsCount: '1'
+          approvalsCount: '2'
           onlyEqual: 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: steps.approved.outputs.isApproved != 'true'
-      - run: echo "${{ steps.approved.outputs.isApproved }}"
-      - run: echo "Approved 1 times."
+      - run: echo ${{ steps.approved.outputs.isApproved }}"
+      - run: echo "Approved 2 times."
         if: steps.approved.outputs.isApproved == 'true'
