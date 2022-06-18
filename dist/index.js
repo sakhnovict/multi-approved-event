@@ -67,6 +67,7 @@ function run() {
                         if (review.state === 'APPROVED') {
                             users.add(review.user.login);
                             const condition = onlyEqual ? approvalsCount === users.size : approvalsCount <= users.size;
+                            log(review.user.login, users);
                             if (condition) {
                                 (0, core_1.setOutput)('isApproved', 'true');
                                 (0, core_1.exportVariable)('isApproved', 'true');
@@ -140,6 +141,12 @@ function getApprovalsCount() {
         }
     }
     return DEFAULT_APPROVALS_COUNT;
+}
+function log(userLogin, users) {
+    console.group();
+    console.log('Current reviewer: ', userLogin);
+    console.log('Unique approvals reviewers: ', users);
+    console.groupEnd();
 }
 
 
