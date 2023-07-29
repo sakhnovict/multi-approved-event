@@ -1,6 +1,6 @@
-# Multi-Approved-Event-Action
+# Pull Request Details
 
-An action provides an event after a certain number of approvals.
+Action to get details related to a pull request which are not available all the events published to trigger workflows
 
 ## Inputs
 
@@ -23,19 +23,19 @@ PR is approved or not `approvalsCount` times. If approved, then `isApproved` = `
 
     on: pull_request_review
     types: [submitted]
-    name: Multi Approved Example Job
+    name: Pull Request Details Example Job
     jobs:
       onApprovedSubmit:
         if: github.event.review.state == 'approved'
         runs-on: ubuntu-latest
         steps:
-        - name: multi-approved-event
-        - uses: sakhnovict/multi-approved-event-action@1.0.9
+        - name: pull-request-details
+        - uses: ihtkas/pull-request-details@release/v1
           id: approved
           with:
-            approvalsCount: '2'
+            approvalsCount: '1'
             onlyEqual: 'true
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        - run: echo "Approved 2 times."
+        - run: echo "Approved 1 times."
           if: steps.approved.outputs.isApproved == 'true'

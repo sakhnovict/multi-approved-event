@@ -1,5 +1,5 @@
 {
-  "name": "multi-approved-event-action",
+  "name": "pull-request-details",
   "version": "0.0.0",
   "private": true,
   "description": "An action provides an event after a certain number of approvals.",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sakhnovict/multi-approved-event-action.git"
+    "url": "git+https://github.com/ihtkas/pull-request-details.git"
   },
   "keywords": [
     "actions",
@@ -25,7 +25,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.9.0",
+    "@actions/core": "^1.10.0",
     "@actions/github": "^5.0.3",
     "@octokit/rest": "^16.35.0",
     "streaming-iterables": "^7.0.4"

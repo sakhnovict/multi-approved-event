@@ -1,9 +1,9 @@
-name: 'multi-approved-event'
-description: Export isApproved state to environment variables.'
+name: 'pull-request-details'
+description: 'Action to get details related to a pull request which are not available all the events published to trigger workflows'
 branding:
   icon: 'check'
   color: 'green'
-author: 'sakhnovict'
+author: 'sakhnovict,ihtkas'
 inputs:
   approvalsCount:
     description: 'The number of unique approvals to set isApproved as true.'

@@ -1,7 +1,6 @@
 import {
   exportVariable,
   getInput,
-  info,
   setFailed,
   setOutput,
 } from '@actions/core';
@@ -25,46 +24,41 @@ async function run(): Promise<void> {
     }
 
     const payload = await getGithubPayload(githubEnv.eventPath);
-    const action = payload.action;
-    const state = payload.review.state;
+  
 
     if (!payload.pull_request) {
       setFailed("This event doesn't contain PR");
     }
 
-    if (isSubmittedAction(action, state)) {
-      const approvalsCount = getApprovalsCount();
-      const onlyEqual = getInput('onlyEqual').toLocaleLowerCase() === 'true';
-      const octokit = new Octokit({ auth: `token ${githubEnv.token}`});
-      const [owner, repo] = githubEnv.repositoryPath.split('/');
-      const options = octokit.pulls.listReviews.endpoint.merge({
-        owner,
-        repo,
-        pull_number: payload.pull_request?.number
-      });
-      const list = map((
-        response: Octokit.Response<Octokit.PullsListResponse>
-      ) => response.data, octokit.paginate.iterator(options));
+    const approvalsCount = getApprovalsCount();
+    const onlyEqual = getInput('onlyEqual').toLocaleLowerCase() === 'true';
+    const octokit = new Octokit({ auth: `token ${githubEnv.token}` });
+    const [owner, repo] = githubEnv.repositoryPath.split('/');
+    const options = octokit.pulls.listReviews.endpoint.merge({
+      owner,
+      repo,
+      pull_number: payload.pull_request?.number
+    });
+    const list = map((
+      response: Octokit.Response<Octokit.PullsListResponse>
+    ) => response.data, octokit.paginate.iterator(options));
 
-      const users = new Set<string>();
-      for await (const review of flatten(list)) {
-        if (review.state === 'APPROVED') {
-          users.add(review.user.login);
-          const condition = onlyEqual ? approvalsCount === users.size : approvalsCount <= users.size;
+    const users = new Set<string>();
+    for await (const review of flatten(list)) {
+      if (review.state === 'APPROVED') {
+        users.add(review.user.login);
+        const condition = onlyEqual ? approvalsCount === users.size : approvalsCount <= users.size;
 
-          log(review.user.login, users);
+        log(review.user.login, users);
 
-          if (condition) {
-            setOutput('isApproved', 'true');
-            exportVariable('isApproved', 'true');
-          } else {
-            setOutput('isApproved', 'false');
-            exportVariable('isApproved', 'false');
-          }
+        if (condition) {
+          setOutput('isApproved', 'true');
+          exportVariable('isApproved', 'true');
+        } else {
+          setOutput('isApproved', 'false');
+          exportVariable('isApproved', 'false');
         }
       }
-    } else {
-      info(`${process.env.GITHUB_EVENT_NAME}/${action}/${state} doesn't support.`);
     }
 
   } catch (error) {
@@ -99,25 +93,11 @@ function isExistGithubEnvironmentVariables(
  * @param path Event path.
  */
 async function getGithubPayload(path: string): Promise<GithubPayload> {
-  const raw = await readFile(path, { encoding: 'utf-8'});
+  const raw = await readFile(path, { encoding: 'utf-8' });
   const payload = JSON.parse(raw) as GithubPayload;
   return payload;
 }
 
-/**
- * Check that action is submitted,
- * @param action Action.
- * @param state Review state.
- */
-function isSubmittedAction(
-  action: string | undefined,
-  state: string | undefined,
-): boolean {
-  return (
-    action === 'submitted' &&
-    state === 'approved'
-  );
-}
 
 function getApprovalsCount(): number {
   const DEFAULT_APPROVALS_COUNT = 1;
